@@ -1,4 +1,4 @@
-# Exercise 5 - BLOB Analysis (connected component analysis and object classification)
+# Exercise 5 - BLOB Analysis (connected component analysis and object classification) 
 
 The purpose of this exercise is to implement, test and validate connected component analysis methods. Also known as BLOB (binary large object) analysis.
 
@@ -20,18 +20,19 @@ After completing this exercise, the student should be able to do the following:
 10. Choose a set of BLOB features that separates objects from noise.
 11. Implement and test a small program for cell nuclei classification and counting.
 
+
 # Installing Python packages
 
 In this exercise, we will be using [scikit-image](https://scikit-image.org/). You should have this library installed, else instructions can be found in the previous exercises.
 
-We will use the virtual environment from the previous exercise (`course02502`).
+We will use the virtual environment from the previous exercise (`course02502`). 
 
 # Exercise data and material
 
 The data and material needed for this exercise can be found here:
-(<https://github.com/RasmusRPaulsen/DTUImageAnalysis/tree/main/exercises/ex5-BLOBAnalysis/data>)
+(https://github.com/RasmusRPaulsen/DTUImageAnalysis/tree/main/exercises/ex5-BLOBAnalysis/data)
 
-# BLOB Analysis in Python
+# BLOB Analysis in Python 
 
 Start by importing some function:
 
@@ -68,7 +69,7 @@ We will start by trying some BLOB analysis approaches on a photo of some Lego br
 
 ### Exercise 1: Binary image from original image
 
-Read the image, convert it to grayscale and use *Otsus* method to compute and apply a threshold.
+Read the image, convert it to grayscale and use *Otsus* method to compute and apply a threshold. 
 
 Show the binary image together with the original image.
 
@@ -115,6 +116,7 @@ With that program, you can explore different BLOB features interactively. It req
 conda install -c plotly plotly=5.10.0
 ```
 
+
 ## Cell counting
 
 The goal of this part of the exercise, is to create a small program that can automatically count the number of cell nuclei in an image.
@@ -151,10 +153,10 @@ io.show()
 ```
 
 ### Exercise 8: Threshold selection
-
 Select an appropriate threshold, that seperates nuclei from the background. You can set it manually or use *Otsus* method.
 
 Show the binary image together with the original image and evaluate if you got the information you wanted in the binary image.
+
 
 It can be seen that there is some noise (non-nuclei) present and that some nuclei are connected. Nuclei that are overlapping very much should be discarded in the analysis. However, if they are only touching each other a little we can try to separate them. More on this later.
 
@@ -163,6 +165,7 @@ To make the following analysis easier the objects that touches the border should
 ### Exercise 9: Remove border BLOBS
 
 Use `segmentation.clear_border` to remove border pixels from the binary image.
+
 
 To be able to analyse the individual objects, the objects should be
 labelled.
@@ -193,6 +196,7 @@ areas = np.array([prop.area for prop in region_props])
 
 We can try if the area of the objects is enough to remove invalid object. Plot a histogram of all the areas and see if it can be used to identify well separated nuclei from overlapping nuclei and noise. You should probably play around with the number of bins in your histogram plotting function.
 
+
 ### Exercise 11: BLOB classification by area
 
 Select a minimum and maximum allowed area and use the following to visualise the result:
@@ -204,11 +208,11 @@ max_area =
 # Create a copy of the label_img
 label_img_filter = label_img
 for region in region_props:
- # Find the areas that do not fit our criteria
- if region.area > max_area or region.area < min_area:
-  # set the pixels in the invalid areas to background
-  for cords in region.coords:
-   label_img_filter[cords[0], cords[1]] = 0
+	# Find the areas that do not fit our criteria
+	if region.area > max_area or region.area < min_area:
+		# set the pixels in the invalid areas to background
+		for cords in region.coords:
+			label_img_filter[cords[0], cords[1]] = 0
 # Create binary image from the filtered label image
 i_area = label_img_filter > 0
 show_comparison(img_small, i_area, 'Found nuclei based on area')
@@ -224,7 +228,8 @@ Extract all the perimeters of the BLOBS:
 perimeters = np.array([prop.perimeter for prop in region_props])
 ```
 
-Try to plot the areas versus the perimeters.
+Try to plot the areas versus the perimeters. 
+
 
 ### Exercise 13: BLOB Circularity
 
@@ -246,9 +251,10 @@ Try to plot the areas versus the circularity. What do you observe?
 
 Extend your method to return the number (the count) of well-formed nuclei in the image.
 
-### Exercise 15: large scale testing
 
-Try to test the method on a larger set of training images. Use slicing to select the different regions from the raw image.
+### Exercise 15: large scale testing
+Try to test the method on a larger set of training images. Use slicing to select the different regions from the raw image. 
+
 
 ### Exercise 16: COS7 cell classification
 
@@ -258,8 +264,9 @@ Try your method on the **Sample G1 - COS7 cells DAPI channel.tiff** image.  COS7
 
 In certain cases cell nuclei are touching and are therefore being treated as one object. It can sometimes be solved using for example the morphological operation **opening** before the object labelling. The operation **erosion** can also be used but it changes the object area.
 
-## References
 
+## References
 - [sci-kit image label](https://scikit-image.org/docs/stable/api/skimage.measure.html#skimage.measure.label)
 - [sci-kit image region properties](https://scikit-image.org/docs/stable/api/skimage.measure.html#skimage.measure.regionprops)
 - [Measure region properties](https://scikit-image.org/docs/dev/auto_examples/segmentation/plot_regionprops.html)
+
