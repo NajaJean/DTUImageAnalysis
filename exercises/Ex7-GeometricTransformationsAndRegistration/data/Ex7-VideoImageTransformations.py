@@ -20,6 +20,12 @@ def process_rgb_image(img, counter):
     """
     return rotate(img, counter)
 
+def swirl_image(img, counter):
+    """
+    Simple processing of a color (RGB) image
+    """
+    return swirl(img, rotation=0, strength=counter, radius=1000)
+
 
 def capture_from_camera_and_show_images():
     print("Starting image capture")
@@ -33,8 +39,11 @@ def capture_from_camera_and_show_images():
     if not cap.isOpened():
         print("Cannot open camera")
         exit()
+        
+    method = 'swirl' # 'rotate'
 
     print("Starting camera loop")
+    
     # To keep track of frames per second using a high-performance counter
     old_time = time.perf_counter()
     fps = 0
@@ -49,11 +58,14 @@ def capture_from_camera_and_show_images():
         # Change from OpenCV BGR to scikit image RGB
         new_image = new_frame[:, :, ::-1]
         proc_time_start = time.perf_counter()
-        proc_img = process_rgb_image(new_image, counter)
+        if method == 'rotate':
+            proc_img = process_rgb_image(new_image, counter)
+        elif method == 'swirl':
+            proc_img = swirl_image(new_image, counter) #process_rgb_image(new_image, counter)
         proc_time = time.perf_counter() - proc_time_start
         # convert back to OpenCV BGR to show it
         proc_img = proc_img[:, :, ::-1]
-
+      
         counter = counter + 1
 
         # update FPS - but do it slowly to avoid fast changing number
@@ -69,7 +81,7 @@ def capture_from_camera_and_show_images():
 
         # Display the resulting frame
         show_in_moved_window('Input', new_frame, 0, 10)
-        show_in_moved_window('Processed image', proc_img, 1200, 10)
+        show_in_moved_window('Processed image', proc_img, 800, 10)
 
         if cv2.waitKey(1) == ord('q'):
             stop = True
