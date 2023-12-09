@@ -27,6 +27,7 @@ def LDA(X, y):
     # Discover and count unique class labels
     class_label = np.unique(y)
     k = len(class_label)
+    print('Number of classes: ', k)
 
     # Initialize
     n_group     = np.zeros((k,1))     # Group counts
