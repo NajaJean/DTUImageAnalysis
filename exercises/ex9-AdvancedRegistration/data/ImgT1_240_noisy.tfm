@@ -1,0 +1,7 @@
+#Insight Transform File V1.0
+#Transform 0
+Transform: CompositeTransform_double_3_3
+#Transform 1
+Transform: Euler3DTransform_double_3_3
+Parameters: 10.4706358964112 0.0011523622573635932 -0.0038044758214865024 0.09670184845812377 -0.1058011497655036 -0.013536330706334847
+FixedParameters: -33.5 -63.5 40.5 0
